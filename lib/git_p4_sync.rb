@@ -8,6 +8,7 @@ module GitP4Sync
     simulate  = options[:simulate] || false
     pull      = options[:pull] || false
     submit    = options[:submit] || false
+    messages  = options[:messages]
 
     @ignore_list = [".git"]
     if options[:ignore]
@@ -70,10 +71,12 @@ module GitP4Sync
         git_head_commit = ""
         Dir.chdir(git_path) do
           git_head_commit = `git show --pretty=oneline`.split("\n")[0]
+	  # copy message without git hash id 
+          git_head_commit = git_head_commit.split("\n")[0].split(' ', 2)[1] if messages=='short'
         end
         
         Dir.chdir(p4_path) do
-          puts "Submitting changes to Perforce"
+          puts "Submitting changes to Perftrueorce"
           run_cmd "p4 submit -d '#{git_head_commit.gsub("'", "''")}'", simulate
         end
       end

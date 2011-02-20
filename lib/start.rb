@@ -25,6 +25,10 @@ OptionParser.new do |opts|
     options[:submit] = o
   end
   
+  opts.on("-M", "--messages [STRING]", String, "Submit message with Git hash or simply message. By default message with hash will be submited. To submit only message specify --messages short ") do |o|
+    options[:messages] = o
+  end
+  
   opts.on("-t", "--test", "Simulates a syncronisation without executing any command") do |o|
     options[:simulate] = o
   end
